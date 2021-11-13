@@ -1,0 +1,36 @@
+
+	.mb-res-left{
+		display:none;
+			float:left;
+		}
+		
+		.mb-res-separator{
+			display:none;
+		}
+	@media only screen and (max-width: 768px) {
+		.mb-res-header{
+			display:none;
+		}
+		.mb-res{
+		text-align:center;
+		display:block;
+		}
+		.mb-vanish
+		{
+			display: none;
+		}
+		.mb-res-left{
+			display:block;
+			float:left;
+		}
+		.mb-res-separator{
+			height:30px;
+			background:#343838;
+			display:block;
+		}
+		.mb-res-right{
+			display:block;
+			text-align: right;
+		}
+		
+	}

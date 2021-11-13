@@ -1,0 +1,177 @@
+/* body text overrides */
+body{
+    color: #000;
+}
+/* Top Override for checkbox of th */
+
+.custom-control-label::before {
+    top:-5px;
+}
+.custom-control-label::after {
+    top:-5px;
+}
+#content {
+    -webkit-box-shadow: inset 0 1px 0 0 #e2e7ed;
+    box-shadow: inset 0 1px 0 0 #e2e7ed;
+    position: relative;
+    z-index: 1;
+    transform: none;
+    min-height: 213px;
+}
+.content-banner {
+    background-color: #f9f9f9;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.content-banner {
+    background-image: url(https://talemy.themespirit.com/wp-content/uploads/2018/10/banner6.jpg);
+    background-color: rgba(0,0,0,.8);
+    padding-top:60px;
+}
+
+.content-banner .container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 3;
+}
+.content-banner .container {
+    padding-top: 80px;
+    padding-bottom: 90px;
+}
+.content-banner .page-title {
+    color: #fff;
+    font-size: 60px !important;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: -.03em;
+    line-height: 1.3;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    word-break: break-word;
+    z-index: 2;
+}
+.content-banner .breadcrumbs {
+    color: #bababa;
+    font-size: 12px;
+    letter-spacing: .1em;
+    margin-top: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.content-banner .banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.6);
+    z-index: 1;
+}
+.content-banner .banner-overlay {
+    background: rgba(0,0,0,.8);
+}
+.content-banner .banner-overlay:before {
+    background-image: url(https://www.ieltsmaster.com/wp-content/themes/talemy/assets/images/wave_banner.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 64px;
+    width: 100%;
+    z-index: 2;
+}
+
+/* Student Detail */
+.overview-panel-icon
+{
+    background: #FF7B00;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 30px;
+    font-weight: 700;
+    border-radius: 50%
+}
+.overview-panel-text{
+    font-size: 30px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+.attendance-table-row > td{
+    font-size: 13px;
+    text-align:center;
+}
+.feedback-header{
+    font-size:18px;
+    font-weight: 600;
+}
+.feedback-tutor-name{
+    margin-left:50px;
+}
+.nav-item
+{
+    width:200px;
+    margin-top:10px;
+}
+.nav-material>li {
+    position: relative;
+    margin-right: 20px;
+}
+
+.nav-material>li .nav-link.active {
+    border: 0;
+    background: #FC7B00;
+    color: #fff;
+    /* border-bottom: 3px solid #03a9f4; */
+}
+.nav-material>li>a {
+    /* color: #86939e; */
+    color: #fff;
+    font-size: 25px;
+    font-weight: 500;
+}
+.nav-material>li>a:hover {
+    border: none;
+     color: #fff;
+    background: 0 0;
+}
+#controls {
+    display: flex;
+    margin-top: 2rem;
+    max-width: 28em;
+  } 
+  
+  #controls > button {
+    flex-grow: 1;
+    height: 3.5rem;
+    min-width: 2rem;
+    border: none;
+    border-radius: 0.15rem;
+    background: #ed341d;
+    margin-left: 2px;
+    box-shadow: inset 0 -0.15rem 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#ffffff;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  #controls > button:hover, button:focus {
+    outline: none;
+    background: #c72d1c;
+  }
+  
+  #controls >button::-moz-focus-inner {
+    border: 0;
+  }
