@@ -4,7 +4,10 @@
 @section('styles')
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
+{{-- Image Editor style starts --}}
+    <link type="text/css" href="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css">
+    {{-- Image Editor style ends --}}
 @endsection
 @section('content')
 @if(Session::has('delete_success'))
@@ -33,19 +36,27 @@
        </div>
        
     </div>
-    <form action="{{route('tutor-writing-test-checked')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('tutor-writing-test-checked')}}" id="answer_form" method="post" onsubmit="handleSubmit(event)" enctype="multipart/form-data">
         <div class="row">
             @if($test->test_type == 1)
             <div class="col-md-8">
                 <h4>Answer</h4>
                 <textarea id="summernote" name="answer" rows="10">{{$test->answer}}</textarea>
             </div>
+
            
             <div class="col-md-4">
                 <h4>Feedback Area</h4>
                 <textarea id="summernote_2" name="feedback" rows="10"></textarea>
             </div>
             @else
+            {{-- Image editor field --}}
+            <div class="col-md-12">
+                <div class="relative image-editor-container" style="height: 600px">
+                    <div id="image-editor"></div>
+                </div>
+            </div>
+            {{-- Image editor field --}}
             <div class="col-md-12">
                 <h4>Feedback Area</h4>
                 <textarea id="summernote_2" name="feedback" rows="10"></textarea>
@@ -215,7 +226,7 @@
                 <input type="hidden" name="question_id" value="{{$test->question->id}}">
                 <input type="hidden" name="spent_timer" id="spent_timer" value="00:00:00">
                 <input type="hidden" name="test_type" value="{{$test->test_type}}">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" onclick="handleSubmit(event)">Submit</button>
             </div>
         </div>
     </form>
@@ -225,6 +236,15 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
 <script src="{{asset('js/app2.js')}}"></script>
+{{-- Image Editor script starts --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.0/fabric.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js">
+    </script>
+    <script src="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.js"></script>
+    <script type="text/javascript" src="{{ asset('js/white-theme.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/black-theme.js') }}"></script>
 <script>
 
 $(document).ready(function() {
@@ -374,4 +394,62 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
 </script>
+<script>
+        // Image editor
+       
+        var editorInstance = new tui.ImageEditor('#image-editor', {
+            includeUI: {
+                loadImage: {
+                    path: '{{asset('answers')}}/{{$test->answer_sheet}}',
+                    name: '{{ $test->id }}',
+                },
+                theme: blackTheme, // or whiteTheme
+                initMenu: 'filter',
+                menuBarPosition: 'bottom',
+            },
+            cssMaxWidth: 700,
+            cssMaxHeight: 500,
+            usageStatistics: false
+        });
+
+        window.onresize = () => editorInstance.ui.resizeEditor();
+        document
+            .querySelector(".tui-image-editor-wrap")
+            .addEventListener("click", () => {
+                document.querySelector(".tui-image-editor-main").className =
+                    "tui-image-editor-main";
+            });
+        async function handleSubmit(event) {
+            event.preventDefault();
+
+            const fileName = getFileName('{{ $test->answer_sheet}}');
+            const newCanvasDataUrl = editorInstance.toDataURL();
+            //   Create file from base64
+            const newFile = await dataUrlToFile(newCanvasDataUrl, fileName);
+            const formData = new FormData();
+
+            // append any other form fields to formdata
+           // formData.append('title', document.getElementById('title').value);
+            formData.append('answer', newFile);
+            formData.append('_method', 'PUT');
+            const response = await axios.post(event.target.getAttribute('action'), formData);
+        };
+
+        function getFileName(url) {
+            return url.split("\\").pop().split("/").filter(Boolean).pop();
+        };
+
+        async function dataUrlToFile(dataURI, fileName) {
+            // To create a blob from a dataURL:
+            const blob = await fetch(dataURI).then((urlData) => urlData.blob());
+            // separate out the mime component
+            const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+            const newFile = new File([blob], fileName, {
+                type: mimeString,
+                lastModified: new Date(),
+            });
+            return newFile;
+        };
+    </script>
 @endsection

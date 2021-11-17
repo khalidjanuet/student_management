@@ -128,7 +128,7 @@ class TestController extends Controller
     }
     public function writing_test_checked(Request $request)
     {
-        //dd($request);
+        dd($request);
         Validator::make($request->all(),[
             'student_id' => 'required',
             'task_response' => 'required',

@@ -174,3 +174,8 @@ Route::post('/forum-topic-save','ForumController@save')->name('forum-topic-save'
 Route::get('/topic-save-comment','ForumController@save_comment')->name('topic-save-comment');
 Route::post('student-writing-test-submit','StudentController@student_writing_test_submit')->name('student-writing-test-submit');
 Route::get('/tutor-book-speaking-test/{id}','TutorController@tutor_book_speaking_test')->name('tutor-book-speaking-test');
+
+Route::get('/image',function(){
+    $student = \App\Student::findOrFail(1752);
+    return view('image',compact('student'));
+});
